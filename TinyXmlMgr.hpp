@@ -10,7 +10,10 @@
 #define TinyXmlMgr_hpp
 
 #include <stdio.h>
+#include "tinyxml2/tinyxml2.h"
 
+using namespace std;
+using namespace tinyxml2;
 
 class TinyXmlMgr
 {
@@ -22,9 +25,22 @@ private:
     //** */
     static TinyXmlMgr* txMgr;
 
+private:
+    string _filename;
+    XMLDocument* pDoc;
+
 public:
     //** singleton */
     static TinyXmlMgr* getInstance();
+    
+public:
+    void writeXml();
+    
+
+private:
+    void addChildNode( XMLElement* rootNode,
+                       string parentNode,
+                       string childNode );
 
 };
 
