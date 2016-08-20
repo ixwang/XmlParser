@@ -34,13 +34,21 @@ public:
     static TinyXmlMgr* getInstance();
     
 public:
-    void writeXml();
     
+    //** some usage samples */
+    void writeXml();
+    void readXml();
 
 private:
+    
+    /**   Add single xml node
+     **   <rootNode>
+     **         <key>value</key>
+     **   </rootNode>
+     **/
     void addChildNode( XMLElement* rootNode,
-                       string parentNode,
-                       string childNode );
+                       string key,
+                       string value );
 
 };
 

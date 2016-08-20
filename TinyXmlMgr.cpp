@@ -30,8 +30,11 @@ TinyXmlMgr* TinyXmlMgr::getInstance()
     return txMgr;
 }
 
+
+//----------------------------------write xml-----------------------------------------
 void TinyXmlMgr::writeXml()
 {
+    //File save path, using cocos2d API here, could be any other
     string filePath = cocos2d::FileUtils::getInstance()->getWritablePath() + _filename;
     
     //Link and create child node by pdoc
@@ -112,4 +115,21 @@ void TinyXmlMgr::addChildNode( XMLElement* rootNode,
     node->LinkEndChild( pDoc->NewText( value.c_str() ) );
     rootNode->LinkEndChild( node );
 }
+
+//----------------------------------read xml-----------------------------------------
+void TinyXmlMgr::readXml()
+{
+    //File save path, using cocos2d API here, could be any other
+    string filePath = cocos2d::FileUtils::getInstance()->getWritablePath() + _filename;
+    
+    //Load file and get node
+    XMLDocument *pDoc = new XMLDocument();
+    
+    //Get root node
+    XMLElement *rootEle = pDoc->RootElement();
+}
+
+
+
+
 
