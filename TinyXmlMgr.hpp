@@ -49,7 +49,6 @@ private:
     void addChildNode( XMLElement* rootNode,
                        string key,
                        string value );
-
 };
 
     
