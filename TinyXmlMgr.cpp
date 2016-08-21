@@ -103,8 +103,17 @@ void TinyXmlMgr::writeXml()
         XMLElement *secLvlNode = pDoc->NewElement("secLvlNode");
         addChildNode( secLvlNode, "trdLvlNode1", "trdLvlNode1 text" );
         addChildNode( secLvlNode, "trdLvlNode2", "trdLvlNode2 text" );
+        
+        firstLvlNode->LinkEndChild( secLvlNode );
     }
     plistElement->LinkEndChild( firstLvlNode );
+    
+    pDoc->SaveFile( filePath.c_str() );
+    
+    // print all generated xml doc
+    //pDoc->Print();
+    
+    delete pDoc; pDoc = nullptr;
 }
 
 void TinyXmlMgr::addChildNode( XMLElement* rootNode,
@@ -123,12 +132,52 @@ void TinyXmlMgr::readXml()
     string filePath = cocos2d::FileUtils::getInstance()->getWritablePath() + _filename;
     
     //Load file and get node
-    XMLDocument *pDoc = new XMLDocument();
+    XMLDocument *pDoc = new XMLDocument(); pDoc->LoadFile( filePath.c_str() );
     
     //Get root node
     XMLElement *rootEle = pDoc->RootElement();
-}
+    
+    //Get root attribute, why need?
+    //const XMLAttribute *attribute = rootEle->FirstAttribute();
+    
+    //Read single node element
+    XMLElement *singleNode = rootEle->FirstChildElement("singleNode");
+    if( singleNode )
+    {
+        if( singleNode->GetText() != NULL)
+        { string singleNodeStr = singleNode->GetText(); }
+    }
+    
+    //Read array node
+    XMLElement *arrayNode = rootEle->FirstChildElement("arrayNode");
+    XMLElement *childEle;
+    if( arrayNode )
+    {
+        childEle = arrayNode->FirstChildElement("arrayChildNode");
+        while ( childEle )
+        {
+            string childNodeTxt = childEle->GetText();
+            childEle = childEle->NextSiblingElement();
+        }
+    }
+    
+    // array‘s array node
+    XMLElement *firstLvlNode = rootEle->FirstChildElement("firstLvlNode");
+    while( firstLvlNode )
+    {
+        XMLElement *secLvlNode = firstLvlNode->FirstChildElement("secLvlNode");
+        
+        while( secLvlNode )
+        {
+            string trdLvlNode1 = secLvlNode->FirstChildElement("trdLvlNode1")->GetText();
+            string trdLvlNode2 = secLvlNode->FirstChildElement("trdLvlNode2")->GetText();
 
+            secLvlNode = secLvlNode->NextSiblingElement();
+        }
+        
+        firstLvlNode = firstLvlNode->NextSiblingElement();
+    }
+}
 
 
 
