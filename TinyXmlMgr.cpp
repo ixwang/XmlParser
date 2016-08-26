@@ -9,7 +9,7 @@
 #include "TinyXmlMgr.hpp"
 
 TinyXmlMgr::TinyXmlMgr()
-:_filename("userInfo.xml")
+:_filename("sample.xml")
 {
 
 }
@@ -35,7 +35,7 @@ TinyXmlMgr* TinyXmlMgr::getInstance()
 void TinyXmlMgr::writeXml()
 {
     //File save path, using cocos2d API here, could be any other
-    string filePath = cocos2d::FileUtils::getInstance()->getWritablePath() + _filename;
+    string filePath = cocos2d::FileUtils::getInstance()->getWritablePath().append( _filename );
     
     //Link and create child node by pdoc
     pDoc = new XMLDocument();
